@@ -25,13 +25,28 @@ class Label:
         surface.blit(img, (self.x, self.y))
 
 class Button:
-    def __init__(self, x: int, y: int, w: int, h: int, text: str, on_click=None, disabled: bool=False):
+    def __init__(self, x: int, y: int, w: int, h: int, text: str, on_click=None, disabled: bool=False, image_path: str=None, hover_image_path: str=None):
         self.rect = pygame.Rect(x, y, w, h)
         self.text = text
         self.on_click = on_click
         self.disabled = disabled
         self.font = get_font(20)
         self.hovered = False
+        
+        self.image = None
+        self.hover_image = None
+        if image_path:
+            try:
+                img = pygame.image.load(image_path).convert_alpha()
+                self.image = pygame.transform.scale(img, (w, h))
+            except Exception as e:
+                print(f"Error loading image {image_path}: {e}")
+        if hover_image_path:
+            try:
+                img = pygame.image.load(hover_image_path).convert_alpha()
+                self.hover_image = pygame.transform.scale(img, (w, h))
+            except Exception as e:
+                print(f"Error loading image {hover_image_path}: {e}")
         
     def update(self, event: pygame.event.Event):
         if self.disabled:
@@ -43,14 +58,19 @@ class Button:
                 self.on_click()
                 
     def draw(self, surface: pygame.Surface):
-        color = COLORS['BUTTON_DISABLED'] if self.disabled else (COLORS['BUTTON_HOVER'] if self.hovered else COLORS['BUTTON'])
-        pygame.draw.rect(surface, color, self.rect, border_radius=5)
-        pygame.draw.rect(surface, COLORS['BLACK'], self.rect, 2, border_radius=5)
+        if self.image:
+            img_to_draw = self.hover_image if (self.hovered and self.hover_image) else self.image
+            surface.blit(img_to_draw, self.rect)
+        else:
+            color = COLORS['BUTTON_DISABLED'] if self.disabled else (COLORS['BUTTON_HOVER'] if self.hovered else COLORS['BUTTON'])
+            pygame.draw.rect(surface, color, self.rect, border_radius=5)
+            pygame.draw.rect(surface, COLORS['BLACK'], self.rect, 2, border_radius=5)
         
-        text_color = COLORS['BLACK'] if self.disabled else COLORS['TEXT']
-        img = self.font.render(self.text, True, text_color)
-        text_rect = img.get_rect(center=self.rect.center)
-        surface.blit(img, text_rect)
+        if self.text:
+            text_color = COLORS['BLACK'] if self.disabled else COLORS['TEXT']
+            img = self.font.render(self.text, True, text_color)
+            text_rect = img.get_rect(center=self.rect.center)
+            surface.blit(img, text_rect)
 
 class TextInput:
     def __init__(self, x: int, y: int, w: int, h: int):
@@ -78,10 +98,20 @@ class TextInput:
         surface.blit(img, (self.rect.x + 5, self.rect.y + 5))
 
 class Panel:
-    def __init__(self, x: int, y: int, w: int, h: int, color: tuple=COLORS['PANEL']):
+    def __init__(self, x: int, y: int, w: int, h: int, color: tuple=COLORS['PANEL'], image_path: str=None):
         self.rect = pygame.Rect(x, y, w, h)
         self.color = color
+        self.image = None
+        if image_path:
+            try:
+                img = pygame.image.load(image_path).convert_alpha()
+                self.image = pygame.transform.scale(img, (w, h))
+            except Exception as e:
+                print(f"Error loading image {image_path}: {e}")
         
     def draw(self, surface: pygame.Surface):
-        pygame.draw.rect(surface, self.color, self.rect, border_radius=10)
-        pygame.draw.rect(surface, COLORS['BLACK'], self.rect, 2, border_radius=10)
+        if self.image:
+            surface.blit(self.image, self.rect)
+        else:
+            pygame.draw.rect(surface, self.color, self.rect, border_radius=10)
+            pygame.draw.rect(surface, COLORS['BLACK'], self.rect, 2, border_radius=10)

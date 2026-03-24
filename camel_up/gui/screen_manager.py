@@ -9,6 +9,7 @@ from gui.screens.game_screen import GameScreen
 from gui.screens.leg_result_screen import LegResultScreen
 from gui.screens.game_over_screen import GameOverScreen
 from gui.screens.history_screen import HistoryScreen
+from gui.screens.how_to_play_screen import HowToPlayScreen
 from database.db_manager import DBManager
 
 class ScreenManager:
@@ -26,7 +27,8 @@ class ScreenManager:
             "game": GameScreen,
             "leg_result": LegResultScreen,
             "game_over": GameOverScreen,
-            "history": HistoryScreen
+            "history": HistoryScreen,
+            "how_to_play": HowToPlayScreen
         }
         self.current_screen = None
         self.switch_screen("menu")

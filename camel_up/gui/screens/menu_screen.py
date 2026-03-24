@@ -15,9 +15,10 @@ class MenuScreen(BaseScreen):
         
         self.title = Label(cx - 100, cy - 150, "Camel Up!", size=48)
         
-        self.btn_new = Button(cx - 100, cy - 50, 200, 50, "New Game", self.on_new)
-        self.btn_hist = Button(cx - 100, cy + 20, 200, 50, "History", self.on_hist)
-        self.btn_quit = Button(cx - 100, cy + 90, 200, 50, "Quit", self.on_quit)
+        self.btn_new = Button(cx - 100, cy - 80, 200, 50, "New Game", self.on_new)
+        self.btn_hist = Button(cx - 100, cy - 10, 200, 50, "History", self.on_hist)
+        self.btn_how = Button(cx - 100, cy + 60, 200, 50, "How to Play", self.on_how)
+        self.btn_quit = Button(cx - 100, cy + 130, 200, 50, "Quit", self.on_quit)
 
     def on_new(self):
         self.switch_screen("setup")
@@ -25,12 +26,16 @@ class MenuScreen(BaseScreen):
     def on_hist(self):
         self.switch_screen("history")
         
+    def on_how(self):
+        self.switch_screen("how_to_play")
+        
     def on_quit(self):
         pygame.event.post(pygame.event.Event(pygame.QUIT))
 
     def handle_event(self, event):
         self.btn_new.update(event)
         self.btn_hist.update(event)
+        self.btn_how.update(event)
         self.btn_quit.update(event)
 
     def draw(self):
@@ -38,4 +43,5 @@ class MenuScreen(BaseScreen):
         self.title.draw(self.screen)
         self.btn_new.draw(self.screen)
         self.btn_hist.draw(self.screen)
+        self.btn_how.draw(self.screen)
         self.btn_quit.draw(self.screen)
