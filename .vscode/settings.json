@@ -2,8 +2,8 @@
     "python.analysis.extraPaths": [
         "./camel_up"
     ],
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
-    "python.envFile": "${workspaceFolder}/.env",
+    "python.defaultInterpreterPath": "${workspaceFolder}/camel_up/venv/Scripts/python.exe",
+    "python.envFile": "${workspaceFolder}/camel_up/.env",
     "terminal.integrated.env.windows": {
         "PYTHONPATH": "${workspaceFolder}/camel_up"
     }

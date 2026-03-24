@@ -1,6 +1,16 @@
 {
+    "venvPath": "camel_up",
+    "venv": "venv",
+    "executionEnvironments": [
+        {
+            "root": "camel_up",
+            "extraPaths": [
+                "."
+            ]
+        }
+    ],
     "extraPaths": [
         "camel_up"
     ],
-    "pythonVersion": "3.11"
+    "pythonVersion": "3.13"
 }

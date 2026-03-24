@@ -3,7 +3,7 @@ game_over_screen.py - Winner announcement
 """
 import pygame
 from .base_screen import BaseScreen
-from gui.components.ui_elements import Button, Label
+from gui.components.ui_elements import Button, Label, get_font
 from config.settings import COLORS
 
 class GameOverScreen(BaseScreen):
@@ -36,7 +36,6 @@ class GameOverScreen(BaseScreen):
         self.screen.fill(COLORS['BACKGROUND'])
         self.title.draw(self.screen)
         
-        from gui.components.ui_elements import get_font
         font = get_font(30)
         
         cx = self.screen.get_width() // 2

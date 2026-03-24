@@ -3,7 +3,7 @@ history_screen.py - Game history + stats from DB
 """
 import pygame
 from .base_screen import BaseScreen
-from gui.components.ui_elements import Button, Label, TextInput
+from gui.components.ui_elements import Button, Label, TextInput, get_font
 from config.settings import COLORS
 
 class HistoryScreen(BaseScreen):
@@ -44,7 +44,6 @@ class HistoryScreen(BaseScreen):
         self.title.draw(self.screen)
         self.btn_back.draw(self.screen)
         
-        from gui.components.ui_elements import get_font
         font = get_font(20)
         
         y = 100

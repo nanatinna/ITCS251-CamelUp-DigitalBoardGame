@@ -7,7 +7,7 @@ from gui.components.board_renderer import BoardRenderer
 from gui.components.camel_renderer import CamelRenderer
 from gui.components.sidebar import Sidebar
 from gui.components.action_panel import ActionPanel
-from gui.components.ui_elements import Label, Button
+from gui.components.ui_elements import Label, Button, get_font
 from game_logic.game_engine import GameEngine
 from config.settings import BOARD_X, BOARD_Y, BOARD_WIDTH, BOARD_HEIGHT, SIDEBAR_X, SIDEBAR_Y, SIDEBAR_WIDTH, SIDEBAR_HEIGHT, COLORS, CAMEL_COLORS
 from typing import List, Dict
@@ -240,7 +240,6 @@ class GameScreen(BaseScreen):
         self.sidebar.draw(self.screen, self.engine)
         self.action_panel.draw(self.screen)
         
-        from gui.components.ui_elements import get_font
         fnt = get_font(24)
         for txt, (x, y), clr, _ in self.floating_texts:
             img = fnt.render(txt, True, clr)
