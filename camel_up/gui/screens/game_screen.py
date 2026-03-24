@@ -232,7 +232,7 @@ class GameScreen(BaseScreen):
             self.action_panel.update_state(self.engine.available_actions())
 
     def draw(self):
-        self.screen.fill(COLORS['BACKGROUND'])
+        self.draw_bg()
         
         self.board_renderer.draw(self.screen, self.engine.board.desert_tiles)
         self.camel_renderer.draw(self.screen, self.board_renderer, self.standings)

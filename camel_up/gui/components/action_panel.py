@@ -36,8 +36,7 @@ class ActionPanel:
             btn.update(event)
 
     def draw(self, surface: pygame.Surface):
-        from config.settings import COLORS
-        pygame.draw.rect(surface, COLORS['PANEL'], self.rect, border_radius=5)
-        pygame.draw.rect(surface, COLORS['BLACK'], self.rect, 2, border_radius=5)
+        from .ui_elements import Panel
+        Panel(self.rect.x, self.rect.y, self.rect.width, self.rect.height).draw(surface)
         for btn in self.actions.values():
             btn.draw(surface)

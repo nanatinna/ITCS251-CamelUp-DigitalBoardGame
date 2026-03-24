@@ -49,7 +49,7 @@ class SetupScreen(BaseScreen):
         self.btn_back.update(event)
 
     def draw(self):
-        self.screen.fill(COLORS['BACKGROUND'])
+        self.draw_bg()
         self.title.draw(self.screen)
         
         for lbl, inp in self.player_inputs:

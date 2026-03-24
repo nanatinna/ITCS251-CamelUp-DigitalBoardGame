@@ -35,18 +35,32 @@ class Button:
         
         self.image = None
         self.hover_image = None
-        if image_path:
-            try:
+        
+        if not image_path: image_path = "assets/button.png"
+        
+        # Load base image
+        try:
+            import os
+            if os.path.exists(image_path):
                 img = pygame.image.load(image_path).convert_alpha()
                 self.image = pygame.transform.scale(img, (w, h))
-            except Exception as e:
-                print(f"Error loading image {image_path}: {e}")
-        if hover_image_path:
-            try:
+        except Exception as e:
+            pass
+            
+        # Hover image handling
+        try:
+            import os
+            if hover_image_path and os.path.exists(hover_image_path):
                 img = pygame.image.load(hover_image_path).convert_alpha()
                 self.hover_image = pygame.transform.scale(img, (w, h))
-            except Exception as e:
-                print(f"Error loading image {hover_image_path}: {e}")
+            elif self.image:
+                # If no hover image is provided but we have a base image, 
+                # we can create a slightly brighter version for hover
+                copy_img = self.image.copy()
+                copy_img.fill((40, 40, 40, 0), special_flags=pygame.BLEND_RGBA_ADD)
+                self.hover_image = copy_img
+        except Exception as e:
+            pass
         
     def update(self, event: pygame.event.Event):
         if self.disabled:
@@ -59,8 +73,15 @@ class Button:
                 
     def draw(self, surface: pygame.Surface):
         if self.image:
-            img_to_draw = self.hover_image if (self.hovered and self.hover_image) else self.image
-            surface.blit(img_to_draw, self.rect)
+            img_to_draw = self.hover_image if (self.hovered and self.hover_image and not self.disabled) else self.image
+            
+            if self.disabled:
+                # Darken if disabled
+                disabled_copy = self.image.copy()
+                disabled_copy.fill((100, 100, 100, 0), special_flags=pygame.BLEND_RGBA_SUB)
+                surface.blit(disabled_copy, self.rect)
+            else:
+                surface.blit(img_to_draw, self.rect)
         else:
             color = COLORS['BUTTON_DISABLED'] if self.disabled else (COLORS['BUTTON_HOVER'] if self.hovered else COLORS['BUTTON'])
             pygame.draw.rect(surface, color, self.rect, border_radius=5)
@@ -102,12 +123,19 @@ class Panel:
         self.rect = pygame.Rect(x, y, w, h)
         self.color = color
         self.image = None
-        if image_path:
+        
+        if not image_path: image_path = "assets/panel.png"
+        
+        import os
+        if os.path.exists(image_path):
             try:
                 img = pygame.image.load(image_path).convert_alpha()
                 self.image = pygame.transform.scale(img, (w, h))
+                
+                # Make panel slightly transparent so game board shows underneath
+                self.image.set_alpha(230)
             except Exception as e:
-                print(f"Error loading image {image_path}: {e}")
+                pass
         
     def draw(self, surface: pygame.Surface):
         if self.image:

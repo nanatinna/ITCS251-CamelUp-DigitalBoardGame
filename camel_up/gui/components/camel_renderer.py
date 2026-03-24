@@ -7,8 +7,8 @@ from config.settings import COLORS
 
 class CamelRenderer:
     def __init__(self):
-        self.camel_w = 30
-        self.camel_h = 20
+        self.camel_w = 40
+        self.camel_h = 30
         self.color_map = {
             "White": COLORS["CAMEL_WHITE"],
             "Orange": COLORS["CAMEL_ORANGE"],
@@ -16,6 +16,13 @@ class CamelRenderer:
             "Blue": COLORS["CAMEL_BLUE"],
             "Yellow": COLORS["CAMEL_YELLOW"]
         }
+        self.base_img = None
+        import os
+        if os.path.exists("assets/camel_white.png"):
+            try:
+                img = pygame.image.load("assets/camel_white.png").convert_alpha()
+                self.base_img = pygame.transform.scale(img, (self.camel_w, self.camel_h))
+            except: pass
 
     def draw(self, surface: pygame.Surface, board_renderer, standings: List[Tuple[str, int, int]]):
         pos_map = {}
@@ -33,8 +40,15 @@ class CamelRenderer:
             for i, (color, _) in enumerate(camels):
                 rect = pygame.Rect(0, 0, self.camel_w, self.camel_h)
                 rect.centerx = cx
-                rect.bottom = base_y - i * (self.camel_h - 2)
+                rect.bottom = base_y - i * (self.camel_h - 5)
                 
                 real_color = self.color_map.get(color, (0,0,0))
-                pygame.draw.rect(surface, real_color, rect, border_radius=3)
-                pygame.draw.rect(surface, COLORS['BLACK'], rect, 2, border_radius=3)
+                
+                if self.base_img:
+                    tinted = self.base_img.copy()
+                    if color != "White":
+                        tinted.fill(real_color, special_flags=pygame.BLEND_RGB_MULT)
+                    surface.blit(tinted, rect)
+                else:
+                    pygame.draw.rect(surface, real_color, rect, border_radius=3)
+                    pygame.draw.rect(surface, COLORS['BLACK'], rect, 2, border_radius=3)

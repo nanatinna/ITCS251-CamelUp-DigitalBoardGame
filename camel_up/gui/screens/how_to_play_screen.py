@@ -42,7 +42,7 @@ class HowToPlayScreen(BaseScreen):
         self.btn_back.update(event)
 
     def draw(self):
-        self.screen.fill(COLORS['BACKGROUND'])
+        self.draw_bg()
         self.panel.draw(self.screen)
         self.title.draw(self.screen)
         

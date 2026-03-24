@@ -29,7 +29,7 @@ class LegResultScreen(BaseScreen):
         self.btn_cont.update(event)
 
     def draw(self):
-        self.screen.fill(COLORS['BACKGROUND'])
+        self.draw_bg()
         self.title.draw(self.screen)
         self.sub.draw(self.screen)
         

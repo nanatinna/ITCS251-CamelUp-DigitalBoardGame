@@ -33,7 +33,7 @@ class GameOverScreen(BaseScreen):
         self.btn_menu.update(event)
 
     def draw(self):
-        self.screen.fill(COLORS['BACKGROUND'])
+        self.draw_bg()
         self.title.draw(self.screen)
         
         font = get_font(30)

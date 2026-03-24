@@ -39,7 +39,7 @@ class MenuScreen(BaseScreen):
         self.btn_quit.update(event)
 
     def draw(self):
-        self.screen.fill(COLORS['BACKGROUND'])
+        self.draw_bg()
         self.title.draw(self.screen)
         self.btn_new.draw(self.screen)
         self.btn_hist.draw(self.screen)

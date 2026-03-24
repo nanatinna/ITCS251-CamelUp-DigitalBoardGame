@@ -40,7 +40,7 @@ class HistoryScreen(BaseScreen):
         self.btn_search.update(event)
 
     def draw(self):
-        self.screen.fill(COLORS['BACKGROUND'])
+        self.draw_bg()
         self.title.draw(self.screen)
         self.btn_back.draw(self.screen)
         
