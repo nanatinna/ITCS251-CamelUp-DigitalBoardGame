@@ -1,0 +1,6 @@
+{
+    "extraPaths": [
+        "camel_up"
+    ],
+    "pythonVersion": "3.11"
+}
